@@ -6,7 +6,7 @@ setup(
     version='1.0',
     description='BaseNet: A Transformer-Based Toolkit for Nanopore Sequencing Signal Decoding',
     author='Qingwen Li',
-    author_email='arwinleecn@gmail.com',
+    author_email='li.qing.wen@foxmail.com',
     url='https://github.com/liqingwen98/BaseNet.git',
     install_requires=[
         'funasr==0.7.0',
