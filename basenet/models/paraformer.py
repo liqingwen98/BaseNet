@@ -87,9 +87,10 @@ class Model(torch.nn.Module):
         base = base[:, : base_lengths.max()]
         if signal_lengths is not None:
             signal = signal[:, :, :signal_lengths.max()]
-            signal = signal.permute(0, 2, 1)
         else:
             signal_lengths = torch.tensor([signal.shape[-1] for _ in range(signal.shape[0])])
+
+        signal = signal.permute(0, 2, 1)
 
         encoder_out, encoder_out_lens, _ = self.encoder(signal, signal_lengths)
         # encoder_out_lens = torch.ceil(signal_lengths/self.stride).long()
