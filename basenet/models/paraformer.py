@@ -4,9 +4,7 @@ from typing import Dict
 from typing import Tuple
 
 import torch
-from funasr.losses.label_smoothing_loss import (
-    LabelSmoothingLoss,  # noqa: H301
-)
+from funasr.losses.label_smoothing_loss import LabelSmoothingLoss
 from funasr.models.predictor.cif import mae_loss
 from funasr.models.predictor.cif import CifPredictorV2
 from funasr.models.encoder.sanm_encoder import SANMEncoder
@@ -80,35 +78,40 @@ class Model(torch.nn.Module):
 
     def forward(
             self,
-            speech: torch.Tensor,
-            speech_lengths: torch.Tensor,
-            text: torch.Tensor,
-            text_lengths: torch.Tensor,
+            signal: torch.Tensor,
+            signal_lengths: torch.Tensor=None,
+            base: torch.Tensor=None,
+            base_lengths: torch.Tensor=None,
     ) -> Tuple[torch.Tensor, Dict[str, torch.Tensor], torch.Tensor]:
         self.step_cur += 1
-        text = text[:, : text_lengths.max()]
-        speech = speech[:, :speech_lengths.max(), :]
-        encoder_out, encoder_out_lens, _ = self.encoder(speech, speech_lengths)
-        # encoder_out_lens = torch.ceil(speech_lengths/self.stride).long()
-        # speech_mask = generate_mask(encoder_out_lens, max_len = encoder_out_lens.max()).to(speech.device)
+        base = base[:, : base_lengths.max()]
+        if signal_lengths is not None:
+            signal = signal[:, :, :signal_lengths.max()]
+            signal = signal.permute(0, 2, 1)
+        else:
+            signal_lengths = torch.tensor([signal.shape[-1] for _ in range(signal.shape[0])])
+
+        encoder_out, encoder_out_lens, _ = self.encoder(signal, signal_lengths)
+        # encoder_out_lens = torch.ceil(signal_lengths/self.stride).long()
+        # speech_mask = generate_mask(encoder_out_lens, max_len = encoder_out_lens.max()).to(signal.device)
         # # 1. Encoder
-        # encoder_out = self.sub_model.encode(speech, speech_mask)
+        # encoder_out = self.sub_model.encode(signal, speech_mask)
 
         loss_att = None
         loss_pre = None
 
         # 2. Attention decoder branch
-        # text -> raw without BOS and EOS
+        # base -> raw without BOS and EOS
         if self.training:
             loss_att, loss_pre = self._calc_att_loss(
-                encoder_out, encoder_out_lens, text, text_lengths
+                encoder_out, encoder_out_lens, base, base_lengths
                     )
             # 3. CTC-Att loss definition
             loss = loss_att + loss_pre * self.predictor_weight
             return loss
         else:
             decode_out = self._calc_att_loss(
-                encoder_out, encoder_out_lens, text, text_lengths
+                encoder_out, encoder_out_lens, base, base_lengths
                     )
             return decode_out
 
