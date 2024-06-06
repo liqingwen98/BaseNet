@@ -35,3 +35,18 @@ for logit in torch.exp(logits).cpu().numpy():
 ```
 
 If you have any question, welcome to contact me: li.qing.wen@foxmail.com
+
+## Citations
+``` bibtex
+@article {Li2024.06.02.597014,
+	author = {Li, Qingwen and Sun, Chen and Wang, Daqian and Lou, Jizhong},
+	title = {BaseNet: A Transformer-Based Toolkit for Nanopore Sequencing Signal Decoding},
+	elocation-id = {2024.06.02.597014},
+	year = {2024},
+	doi = {10.1101/2024.06.02.597014},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2024/06/03/2024.06.02.597014},
+	eprint = {https://www.biorxiv.org/content/early/2024/06/03/2024.06.02.597014.full.pdf},
+	journal = {bioRxiv}
+}
+```
