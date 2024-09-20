@@ -34,7 +34,9 @@ for logit in torch.exp(logits).cpu().numpy():
     seq, path = beam_search(logit, alphabet, beamsize, threshold)
 ```
 
-If you have any question, welcome to contact me: li.qing.wen@foxmail.com
+Because of the github store limitation, check point files can not be added to my repository. 
+
+If you need check point files or have any question, welcome to contact me: li.qing.wen@foxmail.com
 
 ## Citations
 ``` bibtex
