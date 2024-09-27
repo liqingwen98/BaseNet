@@ -1,5 +1,6 @@
 import torch
 from funasr.losses.label_smoothing_loss import LabelSmoothingLoss
+from funasr.modules.embedding import SinusoidalPositionEncoder
 from ..utils.model_utils import Feature_extract, Embeddings, PositionalEncoding
 from ..utils.mask_utils import generate_lower_triangular_mask, reverse_pad_list, make_pad_mask, add_sos_eos
 from ..utils.rescore_utils import ctc_beam_search
@@ -22,7 +23,7 @@ class Model(torch.nn.Module):
         super().__init__()
 
         self.feature = Feature_extract(dim, stride)
-        self.position1 = PositionalEncoding(dim, 0.1)
+        self.position1 = SinusoidalPositionEncoder()
         encoder_layer = torch.nn.TransformerEncoderLayer(d_model=dim, nhead=head, batch_first=True, dim_feedforward=ffd)
         self.encoder = torch.nn.TransformerEncoder(encoder_layer, num_layers=num_layers*2)
         self.drop_out = torch.nn.Dropout(0.1)
