@@ -28,6 +28,11 @@ class PositionalEncoding(torch.nn.Module):
         x = x + self.pe[:, : x.size(1)].requires_grad_(False)
         return self.dropout(x)
 
+class Clamp(torch.nn.Module):
+
+    def forward(self, x):
+        return torch.clamp(x, min=-0.5, max=3.5)
+
 class Feature_extract(torch.nn.Module):
     def __init__(self, d_model, stride):
         super(Feature_extract, self).__init__()
@@ -35,12 +40,15 @@ class Feature_extract(torch.nn.Module):
             torch.nn.Conv1d(1, 4, 5, stride=1, padding=5//2, bias=True),
             torch.nn.BatchNorm1d(4),
             torch.nn.SiLU(),
+            Clamp(),
             torch.nn.Conv1d(4, 16, 5, stride=1, padding=5//2, bias=True),
             torch.nn.BatchNorm1d(16),
             torch.nn.SiLU(),
+            Clamp(),
             torch.nn.Conv1d(16, d_model, 19, stride=stride, padding=19//2, bias=True),
             torch.nn.BatchNorm1d(d_model),
             torch.nn.SiLU(),
+            Clamp(),
         )
 
     def forward(self, x):
