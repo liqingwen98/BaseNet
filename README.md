@@ -40,12 +40,10 @@ If you need check point files or have any question, welcome to contact me: li.qi
 
 ## Citations
 ``` bibtex
-@article {Li2024.06.02.597014,
-	author = {Li, Qingwen and Sun, Chen and Wang, Daqian and Lou, Jizhong},
-	title = {BaseNet: A Transformer-Based Toolkit for Nanopore Sequencing Signal Decoding},
-	year = {2024},
-	doi = {10.1101/2024.06.02.597014},
-	publisher = {Cold Spring Harbor Laboratory},
-	journal = {bioRxiv}
-}
+@article{LI20243430,
+title = {BaseNet: A transformer-based toolkit for nanopore sequencing signal decoding},
+journal = {Computational and Structural Biotechnology Journal},
+year = {2024},
+doi = {https://doi.org/10.1016/j.csbj.2024.09.016},
+author = {Qingwen Li and Chen Sun and Daqian Wang and Jizhong Lou},
 ```
