@@ -1,5 +1,6 @@
 # BaseNet
 BaseNet: A Transformer-Based Toolkit for Nanopore Sequencing Signal Decoding
+![new_figure1](https://github.com/user-attachments/assets/93d7312c-4b10-4ab4-9fbd-577c478261dd)
 
 # How to install
 run the following commands:  
