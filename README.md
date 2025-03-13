@@ -47,4 +47,5 @@ journal = {Computational and Structural Biotechnology Journal},
 year = {2024},
 doi = {https://doi.org/10.1016/j.csbj.2024.09.016},
 author = {Qingwen Li and Chen Sun and Daqian Wang and Jizhong Lou},
+}
 ```
